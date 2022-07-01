@@ -4,8 +4,8 @@ public class BattleHere {
 
     public static void main(String[] args) {
         Scanner inp = new Scanner(System.in);
-        Pokemons pokemon = new Pokemons();
-        Pokemons pokeBoss = new Pokemons();
+        Pokemon pokemon;
+        Pokemon boss;
 
         System.out.print("Boas vindas treinador, insira seu nome: ");
         String trainerName = inp.nextLine().trim();
@@ -13,9 +13,6 @@ public class BattleHere {
         System.out.printf("Muito bem %s, para iniciar, você precisa escolher um pokemon%n", trainerName);
         int pokeChoice;
         String certain;
-        pokeBoss.setPokemonName("Rayquaza");
-        pokeBoss.setPokemonDamage(55);
-        pokeBoss.setPokemonLife(270);
         do {
             do {
                 System.out.println();
@@ -31,20 +28,11 @@ public class BattleHere {
             System.out.println();
             System.out.print("Você escolheu: ");
             if (pokeChoice == 1) {
-                pokemon.setPokemonName("Charmander");
-                pokemon.setPokemonLife(190);
-                pokemon.setPokemonDamage(65);
-                pokemon.setPokemonCure(70);
+                pokemon = new Pokemon("Charmander", 215, 65, 75);
             } else if (pokeChoice == 2) {
-                pokemon.setPokemonName("Squirtle");
-                pokemon.setPokemonLife(220);
-                pokemon.setPokemonDamage(55);
-                pokemon.setPokemonCure(75);
+                pokemon = new Pokemon("Squirtle", 220, 55, 70);
             } else {
-                pokemon.setPokemonName("Bulbasaur");
-                pokemon.setPokemonLife(230);
-                pokemon.setPokemonDamage(60);
-                pokemon.setPokemonCure(80);
+                pokemon = new Pokemon("Bulbasaur", 230,60,80);
             }
             System.out.printf("%s%n", pokemon.getPokemonName());
             System.out.println("Esses são os atributos dele: ");
@@ -54,33 +42,36 @@ public class BattleHere {
             System.out.print("Deseja prosseguir ou trocar de pokemon? (ok / trocar): ");
             certain = inp.next().toLowerCase().trim();
         } while (certain.equals("trocar"));
+        boss = new Pokemon("Rayquaza", 300, 85);
         System.out.println("Muito bem, você ira enfrentar o Boss Rayquaza em uma batalha");
         System.out.println();
         System.out.println("A WILD RAYQUAZA APPEARED!!!");
         System.out.printf("%s, EU ESCOLHO VOCÊ%n", pokemon.getPokemonName());
-        while (pokemon.getPokemonLife() > 0 && pokeBoss.getPokemonLife() > 0) {
+        while (pokemon.getPokemonLife() > 0 && boss.getPokemonLife() > 0) {
             System.out.println();
             System.out.printf("Vida atual %s: %d%n", pokemon.getPokemonName(), pokemon.getPokemonLife());
-            System.out.printf("Vida atual %s: %d%n", pokeBoss.getPokemonName(), pokeBoss.getPokemonLife());
+            System.out.printf("Vida atual %s: %d%n", boss.getPokemonName(), boss.getPokemonLife());
             System.out.println();
             System.out.println("Seu turno, escolha uma ação: ");
             System.out.println("[A] Atacar");
             System.out.println("[C] Curar");
             String actionChoice = inp.next().toUpperCase().trim();
             if (actionChoice.equals("A")) {
-                pokemon.dealDamage();
-                System.out.printf("%s causou %d de dano em %s%n", pokemon.getPokemonName(), pokemon.getPokemonDamage(), pokeBoss.getPokemonName());
-            } else if (actionChoice.equals("C")) {
-                pokemon.selfCure();
+                boss.dealDamage(boss.getPokemonLife(), pokemon.getPokemonDamage());
+                System.out.printf("%s causou %d de dano em %s%n", pokemon.getPokemonName(), pokemon.getPokemonDamage(), boss.getPokemonName());
+            }
+            else if (actionChoice.equals("C")) {
+                pokemon.selfCure(pokemon.getPokemonLife(), pokemon.getPokemonCure());
                 System.out.printf("Voce curou %d pontos%n", pokemon.getPokemonCure());
-            } else {
+            }
+            else {
                 System.out.println("Opção inválida, você peredeu seu turno...");
             }
-            System.out.printf("É a vez do boss, ele ataca %s e causa %d de dano%n", pokemon.getPokemonName(), pokeBoss.getPokemonDamage());
-            pokeBoss.dealDamage();
+            pokemon.dealDamage(pokemon.getPokemonLife(), boss.getPokemonDamage());
+            System.out.printf("É a vez do boss, ele ataca %s e causa %d de dano%n", pokemon.getPokemonName(), boss.getPokemonDamage());
         }
         System.out.println();
-        if (pokemon.getPokemonLife() > pokeBoss.getPokemonLife()) {
+        if (pokemon.getPokemonLife() > boss.getPokemonLife()) {
             System.out.println("Você venceu, parabéns!");
         } else {
             System.out.println("O Rayquaza te amassou, sinto muito :(");

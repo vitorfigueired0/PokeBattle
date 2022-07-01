@@ -9,35 +9,23 @@ public class Pokemons {
     //-------------------------
 
     //métodos----------------------------
-    public void setPokemonName(String pokemonName){
-        this.pokemonName = pokemonName;
-    }
     public String getPokemonName(){
         return pokemonName;
-    }
-    public void setPokemonLife(int pokemonLife){
-        this.pokemonLife = pokemonLife;
     }
     public int getPokemonLife(){
         return pokemonLife;
     }
-    public void setPokemonDamage(int pokemonDamage){
-        this.pokemonDamage = pokemonDamage;
-    }
     public int getPokemonDamage(){
         return pokemonDamage;
-    }
-    public void setPokemonCure(int pokemonCure){
-        this.pokemonCure = pokemonCure;
     }
     public int getPokemonCure(){
         return pokemonCure;
     }
-    public int dealDamage(){
-        return pokemonLife -= pokemonDamage ;
+    public void dealDamage(int pokemonLife, int pokemonCure){
+        pokemonLife -= pokemonDamage;
     }
-    public int selfCure(){
-        return pokemonLife += pokemonCure;
+    public void selfCure(int pokemonLife, int pokemonCure){
+        this += pokemonCure;
     }
 }
 
