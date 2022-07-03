@@ -1,9 +1,11 @@
 package pokebatlle;
 import java.util.Scanner;
+import java.util.Random;
 public class BattleHere {
 
     public static void main(String[] args) {
         Scanner inp = new Scanner(System.in);
+        Random randint = new Random();
         Pokemon pokemon;
         Pokemon boss;
 
@@ -57,8 +59,9 @@ public class BattleHere {
             System.out.println("[C] Curar");
             String actionChoice = inp.next().toUpperCase().trim();
             if (actionChoice.equals("A")) {
-                boss.dealDamage(boss.getPokemonLife(), pokemon.getPokemonDamage());
-                System.out.printf("%s causou %d de dano em %s%n", pokemon.getPokemonName(), pokemon.getPokemonDamage(), boss.getPokemonName());
+                int roundDamage = randint.nextInt(pokemon.getPokemonDamage());
+                boss.reciveDamage(boss.getPokemonLife(), roundDamage);
+                System.out.printf("%s causou %d de dano em %s%n", pokemon.getPokemonName(), roundDamage, boss.getPokemonName());
             }
             else if (actionChoice.equals("C")) {
                 pokemon.selfCure(pokemon.getPokemonLife(), pokemon.getPokemonCure());
@@ -67,13 +70,19 @@ public class BattleHere {
             else {
                 System.out.println("Opção inválida, você peredeu seu turno...");
             }
-            pokemon.dealDamage(pokemon.getPokemonLife(), boss.getPokemonDamage());
-            System.out.printf("É a vez do boss, ele ataca %s e causa %d de dano%n", pokemon.getPokemonName(), boss.getPokemonDamage());
+
+            if(boss.getPokemonLife() > 0){
+                int roundDamage = randint.nextInt(boss.getPokemonDamage());
+                pokemon.reciveDamage(pokemon.getPokemonLife(), roundDamage);
+                System.out.printf("É a vez do boss, ele ataca %s e causa %d de dano%n", pokemon.getPokemonName(), roundDamage);
+            }
         }
         System.out.println();
         if (pokemon.getPokemonLife() > boss.getPokemonLife()) {
+            System.out.printf("%s desmaiou%n", boss.getPokemonName());
             System.out.println("Você venceu, parabéns!");
         } else {
+            System.out.printf("%s desmaiou%n",pokemon.getPokemonName());
             System.out.println("O Rayquaza te amassou, sinto muito :(");
         }
     }
