@@ -196,7 +196,7 @@ public class BattleHere {
                 System.out.println("Você venceu, parabéns!");
             } else {
                 System.out.printf("%s desmaiou%n", pokemon.getName());
-                System.out.println("O Rayquaza te amassou, sinto muito :(");
+                System.out.printf("O %s te amassou, sinto muito :(%n", boss.getName());
             }
             System.out.print("Deseja jogar novamente?(s/n): ");
             restart = inp.next().toLowerCase().trim();
